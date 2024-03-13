@@ -5,10 +5,84 @@ import TheWelcome from './components/TheWelcome.vue'
 
 <template>
 
-
+<!-- data binding -->
+var vm = new Vue({
+  el: '#databinding',
+  data: {
+    title : "Inline style Binding",
+    activeColor: 'red',
+    fontSize : 30
+  }
+});
 
 <!-- conditional example (v-if) -->
 <h1 v-if="awesome">Vue is awesome!</h1>
+
+<template>
+  <div>
+    <my-component :my-prop="myData">
+      <template v-slot:default="{ myFunction }">
+        <button @click="myFunction()">Execute Function</button>
+      </template>
+      <template v-slot:footer>
+        <p>Here's some contact info</p>
+      </template>
+    </my-component>
+  </div>
+</template>
+
+<!-- props and slots-->
+<script>
+import MyComponent from './MyComponent.vue'
+
+export default {
+  components: {
+    MyComponent
+  },
+  data() {
+    return {
+      myData: 'Hello, World!'
+    }
+  },
+  methods: {
+    myFunction() {
+      alert(this.myData)
+    }
+  }
+}
+
+export default {
+  props: {
+    myProp: String
+  },
+  methods: {
+    myFunction() {
+      alert(this.myProp)
+    }
+  }
+}
+</script>
+
+<!-- events -->
+<button @click="counter++">Add 1</button>
+	<p>The button above has been clicked {{ counter }} times.</p>
+
+<!-- reactivity -->
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.myRef = null; 
+  }
+
+  componentDidMount() {
+    // This will reference the DOM element
+    console.log(this.myRef);
+  }
+
+  render() {
+    return <div ref={(ref) => { this.myRef = ref; }}>Hello, world!</div>; 
+  }
+};
 
 </template>
 
